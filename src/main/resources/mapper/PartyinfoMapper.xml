@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cs2020.experiment04.mapper.PartyinfoMapper">
+
+    <insert id="saveUserParty">
+        insert into user_party
+        values (#{userId}, #{partyId}, 1, 0)
+    </insert>
+
+    <!--没有参加的、正在进行的、没有成团的、不是自己创建的-->
+    <select id="findAllByPage" resultType="cs2020.experiment04.entity.Partyinfo">
+        select *
+        from partyinfo
+        where id not in (select party_id from user_party where user_id = #{userId})
+          and id not in (select party_id from user_party where is_active = 0)
+          and id not in (select party_id from user_party where is_group = 1)
+          and username not in (select username from sys_user where id = #{userId})
+    </select>
+
+    <!--自己创建的、正在进行的、没有成团的-->
+    <select id="findCreatedByPage" resultType="cs2020.experiment04.entity.Partyinfo">
+        select *
+        from partyinfo
+        where username in (select username
+                           from sys_user
+                           where id = #{userId})
+          and id in (select party_id from user_party where user_id = #{userId} and is_active = 1 and is_group = 0)
+    </select>
+
+    <!--自己创建的、正在进行的、已经成团的-->
+    <select id="findCreatedGroupedByPage" resultType="cs2020.experiment04.entity.Partyinfo">
+        select *
+        from partyinfo
+        where username in (select username
+                           from sys_user
+                           where id = #{userId})
+          and id in (select party_id from user_party where user_id = #{userId} and is_active = 1 and is_group = 1)
+    </select>
+
+    <!--不是自己创建的、正在进行的、没有成团的-->
+    <select id="findJoinedByPage" resultType="cs2020.experiment04.entity.Partyinfo">
+        select *
+        from partyinfo
+        where username not in (select username
+                               from sys_user
+                               where id = #{userId})
+          and id in (select party_id from user_party where user_id= #{userId} and is_active = 1 and is_group = 0)
+    </select>
+
+    <!--不是自己创建的、正在进行的、已经成团的-->
+    <select id="findJoinedGroupedByPage" resultType="cs2020.experiment04.entity.Partyinfo">
+        select *
+        from partyinfo
+        where username not in (select username
+                               from sys_user
+                               where id = #{userId})
+          and id in (select party_id from user_party where user_id= #{userId} and is_active = 1 and is_group = 1)
+    </select>
+
+    <select id="countNowNumber" resultType="java.lang.Integer">
+        select count(*)
+        from user_party
+        where party_id = #{partyId}
+    </select>
+</mapper>

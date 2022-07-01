@@ -1,0 +1,62 @@
+server:
+  ip: localhost
+  port: 9090
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/teamtogether?serverTimezone=GMT%2b8
+    username: root
+    password: 123456
+  redis:
+    host: 127.0.0.1
+    port: 6379
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+    #邮箱验证码配置
+  mail:
+    #smtp服务主机  qq邮箱则为smtp.qq.com;163邮箱是smtp.163.com
+    host: smtp.163.com
+    #服务协议
+    protocol: smtp
+    # 编码集
+    default-encoding: UTF-8
+    #发送邮件的账户
+    username: z1436910962@163.com
+    #授权码
+    password: ETDVZVCHOLGLMPGM
+    test-connection: true
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+
+#z1436910962@163.com
+#ETDVZVCHOLGLMPGM
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+files:
+  upload:
+    path: /home/files/
+
+
+# 分页配置
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql
