@@ -44,6 +44,12 @@ public class PartyinfoController {
         partyinfoService.saveUserParty(one);
         return Result.success();
     }
+    @PostMapping("/changeparty")
+    public Result saveParty(@RequestBody Partyinfo partyinfo) {
+        //插入partyinfo表
+        partyinfoService.saveOrUpdate(partyinfo);
+        return Result.success();
+    }
 
     @DeleteMapping("/{id}")
     public Result delete(@PathVariable Integer id) {
