@@ -25,9 +25,14 @@ public interface IPartyinfoService extends IService<Partyinfo> {
 
     List<Partyinfo> findCreatedGroupedByPage(Integer pageNum, Integer pageSize, Integer id);
 
+    //findCreatePayedByPage
+    List<Partyinfo> findCreatePayedByPage(Integer pageNum, Integer pageSize, Integer id);
+
     List<Partyinfo> findJoinedByPage(Integer pageNum, Integer pageSize, Integer id);
 
     List<Partyinfo> findJoinedGroupedByPage(Integer pageNum, Integer pageSize, Integer id);
 
     int toGroup(Integer partyId);
+
+    int endParty(Integer partyId);
 }

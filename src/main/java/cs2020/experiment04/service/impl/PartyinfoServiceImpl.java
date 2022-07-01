@@ -40,6 +40,7 @@ public class PartyinfoServiceImpl extends ServiceImpl<PartyinfoMapper, Partyinfo
     @Override
     public int saveUserParty(Partyinfo partyinfo) {
         Integer partyinfoId = partyinfo.getId();
+        //用户名取用户
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("username", partyinfo.getUsername());
         User userServiceOne = userService.getOne(queryWrapper);
@@ -65,6 +66,12 @@ public class PartyinfoServiceImpl extends ServiceImpl<PartyinfoMapper, Partyinfo
     }
 
     @Override
+    public List<Partyinfo> findCreatePayedByPage(Integer pageNum, Integer pageSize, Integer id) {
+        PageHelper.startPage(pageNum,pageSize);
+        return AddCountNum(partyinfoMapper.findCreatePayedByPage(id));
+    }
+
+    @Override
     public List<Partyinfo> findJoinedByPage(Integer pageNum, Integer pageSize, Integer id) {
         PageHelper.startPage(pageNum,pageSize);
         return AddCountNum(partyinfoMapper.findJoinedByPage(id));
@@ -79,6 +86,11 @@ public class PartyinfoServiceImpl extends ServiceImpl<PartyinfoMapper, Partyinfo
     @Override
     public int toGroup(Integer partyId) {
         return partyinfoMapper.toGroup(partyId);
+    }
+
+    @Override
+    public int endParty(Integer partyId) {
+        return partyinfoMapper.endParty(partyId);
     }
 
     //增加当前人数

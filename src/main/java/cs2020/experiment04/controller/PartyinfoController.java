@@ -78,10 +78,6 @@ public class PartyinfoController {
                            @RequestParam Integer pageSize,
                            @RequestParam Integer id) {
 
-
-/*        QueryWrapper<Partyinfo> queryWrapper = new QueryWrapper<>();
-        queryWrapper.orderByDesc("id");
-        Page<Partyinfo> page = partyinfoService.page(new Page<>(pageNum, pageSize), queryWrapper);*/
         List<Partyinfo> allByPage = partyinfoService.findAllByPage(pageNum, pageSize, id);
         return Result.success(allByPage);
     }
@@ -111,6 +107,15 @@ public class PartyinfoController {
         return Result.success(createdByPage);
     }
 
+    @GetMapping("/mycreatepayed")
+    public Result myCreatePayed(@RequestParam Integer pageNum,
+                                @RequestParam Integer pageSize,
+                                @RequestParam Integer id) {
+
+        List<Partyinfo> CreatePayedByPage = partyinfoService.findCreatePayedByPage(pageNum, pageSize, id);
+        return Result.success(CreatePayedByPage);
+    }
+
     @GetMapping("/myjoin")
     public Result myJoin(@RequestParam Integer pageNum,
                          @RequestParam Integer pageSize,
@@ -129,9 +134,17 @@ public class PartyinfoController {
         return Result.success(joinedGroupedByPage);
     }
 
+    //成团is_group 0->1
     @GetMapping("/toGroup")
     public Result toGroup(@RequestParam Integer partyId) {
         partyinfoService.toGroup(partyId);
+        return Result.success();
+    }
+
+    //结束活动is_active 1->0
+    @GetMapping("/endparty")
+    public Result endParty(@RequestParam Integer partyId) {
+        partyinfoService.endParty(partyId);
         return Result.success();
     }
 

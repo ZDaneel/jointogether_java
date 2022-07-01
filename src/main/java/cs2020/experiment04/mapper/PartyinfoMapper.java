@@ -25,9 +25,13 @@ public interface PartyinfoMapper extends BaseMapper<Partyinfo> {
 
     List<Partyinfo> findCreatedGroupedByPage(@Param("userId")Integer id);
 
+    List<Partyinfo> findCreatePayedByPage(@Param("userId")Integer id);
+
     List<Partyinfo> findJoinedByPage(@Param("userId")Integer id);
 
     List<Partyinfo> findJoinedGroupedByPage(@Param("userId")Integer id);
 
     int toGroup(@Param("partyId")Integer partyId);
+
+    int endParty(@Param("partyId")Integer partyId);
 }

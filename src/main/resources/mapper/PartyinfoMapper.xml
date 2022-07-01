@@ -4,13 +4,21 @@
 
     <insert id="saveUserParty">
         insert into user_party
-        values (#{userId}, #{partyId}, 1, 0)
+        values (#{userId}, #{partyId}, 1, 0, 0)
     </insert>
 
+    <!--成团修改is_group-->
     <update id="toGroup">
         update user_party
         set is_group=1
-        where party_id=#{partyId}
+        where party_id = #{partyId}
+    </update>
+
+    <!--结束活动is_active-->
+    <update id="endParty">
+        update user_party
+        set is_active=0
+        where party_id = #{partyId}
     </update>
 
     <!--没有参加的、正在进行的、没有成团的、不是自己创建的-->
@@ -23,46 +31,82 @@
           and username not in (select username from sys_user where id = #{userId})
     </select>
 
-    <!--自己创建的、正在进行的、没有成团的-->
+    <!--自己创建的、正在进行的、没有成团的、没有缴费的-->
     <select id="findCreatedByPage" resultType="cs2020.experiment04.entity.Partyinfo">
         select *
         from partyinfo
         where username in (select username
                            from sys_user
                            where id = #{userId})
-          and id in (select party_id from user_party where user_id = #{userId} and is_active = 1 and is_group = 0)
+          and id in (select party_id
+                     from user_party
+                     where user_id = #{userId}
+                       and is_active = 1
+                       and is_group = 0
+                       and is_payed = 0)
     </select>
 
-    <!--自己创建的、正在进行的、已经成团的-->
+    <!--自己创建的、正在进行的、已经成团的、没有缴费的-->
     <select id="findCreatedGroupedByPage" resultType="cs2020.experiment04.entity.Partyinfo">
         select *
         from partyinfo
         where username in (select username
                            from sys_user
                            where id = #{userId})
-          and id in (select party_id from user_party where user_id = #{userId} and is_active = 1 and is_group = 1)
+          and id in (select party_id
+                     from user_party
+                     where user_id = #{userId}
+                       and is_active = 1
+                       and is_group = 1
+                       and is_payed = 0)
     </select>
 
-    <!--不是自己创建的、正在进行的、没有成团的-->
+    <!--自己创建的、已经结束的、已经成团的、没有缴费的-->
+    <select id="findCreatePayedByPage" resultType="cs2020.experiment04.entity.Partyinfo">
+        select *
+        from partyinfo
+        where username in (select username
+                           from sys_user
+                           where id = #{userId})
+          and id in (select party_id
+                     from user_party
+                     where user_id = #{userId}
+                       and is_active = 0
+                       and is_group = 1
+                       and is_payed = 0)
+    </select>
+
+    <!--不是自己创建的、正在进行的、没有成团的、没有缴费的-->
     <select id="findJoinedByPage" resultType="cs2020.experiment04.entity.Partyinfo">
         select *
         from partyinfo
         where username not in (select username
                                from sys_user
                                where id = #{userId})
-          and id in (select party_id from user_party where user_id= #{userId} and is_active = 1 and is_group = 0)
+          and id in (select party_id
+                     from user_party
+                     where user_id = #{userId}
+                       and is_active = 1
+                       and is_group = 0
+                       and is_payed = 0)
     </select>
 
-    <!--不是自己创建的、正在进行的、已经成团的-->
+    <!--不是自己创建的、正在进行的、已经成团的、没有缴费的-->
     <select id="findJoinedGroupedByPage" resultType="cs2020.experiment04.entity.Partyinfo">
         select *
         from partyinfo
         where username not in (select username
                                from sys_user
                                where id = #{userId})
-          and id in (select party_id from user_party where user_id= #{userId} and is_active = 1 and is_group = 1)
+          and id in (select party_id
+                     from user_party
+                     where user_id = #{userId}
+                       and is_active = 1
+                       and is_group = 1
+                       and is_payed = 0)
     </select>
 
+    <!--统计已经报名的人数-->
     <select id="countNowNumber" resultType="java.lang.Integer">
         select count(*)
         from user_party
