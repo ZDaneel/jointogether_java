@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2022-07-01
  */
 @RestController
-@RequestMapping("//partybill")
+@RequestMapping("/partybill")
 public class PartybillController {
 
     @Resource
@@ -47,8 +47,8 @@ public class PartybillController {
     }
 
     @GetMapping
-    public Result findAll() {
-        return Result.success(partybillService.list());
+    public Result findAll(@RequestParam Integer partyId) {
+        return Result.success(partybillService.findBillByPartyId(partyId));
     }
 
     @GetMapping("/{id}")

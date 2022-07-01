@@ -2,4 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cs2020.experiment04.mapper.PartybillMapper">
 
+    <select id="findBillByPartyId" resultType="cs2020.experiment04.entity.Partybill">
+        select *
+        from partybill
+        where bill_party_id=#{partyId}
+    </select>
 </mapper>
