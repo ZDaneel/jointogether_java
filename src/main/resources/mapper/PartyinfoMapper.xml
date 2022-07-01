@@ -7,6 +7,12 @@
         values (#{userId}, #{partyId}, 1, 0)
     </insert>
 
+    <update id="toGroup">
+        update user_party
+        set is_group=1
+        where party_id=#{partyId}
+    </update>
+
     <!--没有参加的、正在进行的、没有成团的、不是自己创建的-->
     <select id="findAllByPage" resultType="cs2020.experiment04.entity.Partyinfo">
         select *

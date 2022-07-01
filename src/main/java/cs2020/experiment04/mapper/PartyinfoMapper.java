@@ -28,4 +28,6 @@ public interface PartyinfoMapper extends BaseMapper<Partyinfo> {
     List<Partyinfo> findJoinedByPage(@Param("userId")Integer id);
 
     List<Partyinfo> findJoinedGroupedByPage(@Param("userId")Integer id);
+
+    int toGroup(@Param("partyId")Integer partyId);
 }

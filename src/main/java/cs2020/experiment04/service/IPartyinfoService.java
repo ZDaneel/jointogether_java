@@ -28,4 +28,6 @@ public interface IPartyinfoService extends IService<Partyinfo> {
     List<Partyinfo> findJoinedByPage(Integer pageNum, Integer pageSize, Integer id);
 
     List<Partyinfo> findJoinedGroupedByPage(Integer pageNum, Integer pageSize, Integer id);
+
+    int toGroup(Integer partyId);
 }

@@ -2,6 +2,8 @@ package cs2020.experiment04.controller;
 
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+
+import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author ZD
  * @since 2022-06-30
  */
+@Log4j2
 @RestController
 @RequestMapping("/partyinfo")
 public class PartyinfoController {
@@ -118,6 +121,12 @@ public class PartyinfoController {
 
         List<Partyinfo> joinedGroupedByPage = partyinfoService.findJoinedGroupedByPage(pageNum, pageSize, id);
         return Result.success(joinedGroupedByPage);
+    }
+
+    @GetMapping("/toGroup")
+    public Result toGroup(@RequestParam Integer partyId) {
+        partyinfoService.toGroup(partyId);
+        return Result.success();
     }
 
 }

@@ -76,6 +76,11 @@ public class PartyinfoServiceImpl extends ServiceImpl<PartyinfoMapper, Partyinfo
         return AddCountNum(partyinfoMapper.findJoinedGroupedByPage(id));
     }
 
+    @Override
+    public int toGroup(Integer partyId) {
+        return partyinfoMapper.toGroup(partyId);
+    }
+
     //增加当前人数
     public List<Partyinfo> AddCountNum(List<Partyinfo> partyinfoList){
         for (int i = 0; i < partyinfoList.size(); i++) {
