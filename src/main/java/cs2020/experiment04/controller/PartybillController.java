@@ -2,6 +2,8 @@ package cs2020.experiment04.controller;
 
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import cs2020.experiment04.entity.Partyinfo;
+import cs2020.experiment04.service.IPartyinfoService;
 import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.util.List;
@@ -27,10 +29,19 @@ public class PartybillController {
     @Resource
     private IPartybillService partybillService;
 
+    @Resource
+    private IPartyinfoService partyinfoService;
+
     // 新增或者更新
     @PostMapping
     public Result save(@RequestBody Partybill partybill) {
         partybillService.saveOrUpdate(partybill);
+        //修改partyinfo里的费用
+        Integer partyId = partybill.getBillPartyId();
+        Double charge = partybill.getBillPrice();
+        Partyinfo partyinfo = partyinfoService.getById(partyId);
+        partyinfo.setCharge(partyinfo.getCharge()+charge);
+        partyinfoService.saveOrUpdate(partyinfo);
         return Result.success();
     }
 

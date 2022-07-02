@@ -1,8 +1,6 @@
 package cs2020.experiment04.controller;
 
-
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-
+import cs2020.experiment04.service.IPartybillService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,19 +29,21 @@ public class PartyinfoController {
     @Resource
     private IPartyinfoService partyinfoService;
 
+    @Resource
+    private IPartybillService partybillService;
+
     // 新增或者更新
     @PostMapping
     public Result save(@RequestBody Partyinfo partyinfo) {
         //插入partyinfo表
         partyinfoService.saveOrUpdate(partyinfo);
-        //查询插入的id
-        QueryWrapper<Partyinfo> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("partyname", partyinfo.getPartyname());
-        Partyinfo one = partyinfoService.getOne(queryWrapper);
         //插入user_party表
-        partyinfoService.saveUserParty(one);
+        partyinfoService.saveUserParty(partyinfo);
+        //插入partbill表
+        partybillService.savePartyBillFirst(partyinfo);
         return Result.success();
     }
+
     @PostMapping("/changeparty")
     public Result saveParty(@RequestBody Partyinfo partyinfo) {
         //插入partyinfo表
@@ -127,8 +127,8 @@ public class PartyinfoController {
 
     @GetMapping("/myjoingrouped")
     public Result myJoinGrouped(@RequestParam Integer pageNum,
-                         @RequestParam Integer pageSize,
-                         @RequestParam Integer id) {
+                                @RequestParam Integer pageSize,
+                                @RequestParam Integer id) {
 
         List<Partyinfo> joinedGroupedByPage = partyinfoService.findJoinedGroupedByPage(pageNum, pageSize, id);
         return Result.success(joinedGroupedByPage);

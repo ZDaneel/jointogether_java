@@ -2,6 +2,7 @@ package cs2020.experiment04;
 
 import com.github.pagehelper.PageInfo;
 import cs2020.experiment04.entity.Partyinfo;
+import cs2020.experiment04.service.IPartybillService;
 import cs2020.experiment04.service.IPartyinfoService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,8 @@ class Experiment04ApplicationTests {
     @Autowired
     private IPartyinfoService partyinfoService;
 
+    @Autowired
+    private IPartybillService partybillService;
 
     @Test
     void contextLoads() {
@@ -36,4 +39,12 @@ class Experiment04ApplicationTests {
         partyinfoService.saveUserParty(partyinfo);
     }
 
+    @Test
+    void testSaveBillFirst(){
+        Partyinfo partyinfo = new Partyinfo();
+        partyinfo.setId(1);
+        partyinfo.setUsername("admin");
+        partyinfo.setCharge(100.0);
+        partybillService.savePartyBillFirst(partyinfo);
+    }
 }
