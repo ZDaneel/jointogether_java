@@ -75,5 +75,18 @@ public class PartybillController {
         return Result.success(partybillService.page(new Page<>(pageNum, pageSize), queryWrapper));
     }
 
+    //确认缴费
+    @GetMapping("/payconfirm")
+    public Result payConfirm(@RequestParam Integer userId, @RequestParam Integer partyId) {
+        partybillService.payConfirm(userId, partyId);
+        return Result.success();
+    }
+
+    //确认缴费
+    @GetMapping("/payover")
+    public Result payOver(@RequestParam Integer partyId) {
+        partybillService.payOver(partyId);
+        return Result.success();
+    }
 }
 

@@ -174,6 +174,5 @@ public class PartyinfoController {
         partyinfoService.endJoinedParty(userId, partyId);
         return Result.success();
     }
-
 }
 

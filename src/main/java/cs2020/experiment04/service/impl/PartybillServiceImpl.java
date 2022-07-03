@@ -48,6 +48,14 @@ public class PartybillServiceImpl extends ServiceImpl<PartybillMapper, Partybill
         saveOrUpdate(partybill);
     }
 
+    @Override
+    public void payConfirm(Integer userId, Integer partyId) {
+        partybillMapper.payConfirm(userId, partyId);
+    }
 
+    @Override
+    public void payOver(Integer partyId) {
+        partybillMapper.payOver(partyId);
+    }
 
 }

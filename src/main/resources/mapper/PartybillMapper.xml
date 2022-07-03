@@ -7,4 +7,19 @@
         from partybill
         where bill_party_id=#{partyId}
     </select>
+
+    <!--确定缴费-->
+    <update id="payConfirm">
+        update user_party
+        set is_paid=1
+        where party_id = #{partyId}
+          and user_id = #{userId}
+    </update>
+
+    <!--缴费全部完成-->
+    <update id="payOver">
+        update partyinfo
+        set payover=1
+        where id = #{partyId}
+    </update>
 </mapper>

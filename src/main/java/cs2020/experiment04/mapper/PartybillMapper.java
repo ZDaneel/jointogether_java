@@ -16,4 +16,14 @@ import java.util.List;
  */
 public interface PartybillMapper extends BaseMapper<Partybill> {
     List<Partybill> findBillByPartyId(@Param("partyId") Integer partyId);
+
+    /*
+     * 确认缴费
+     */
+    int payConfirm(@Param("userId")Integer userId, @Param("partyId")Integer partyId);
+
+    /*
+     * 缴费全部完成
+     */
+    int payOver(@Param("partyId")Integer partyId);
 }

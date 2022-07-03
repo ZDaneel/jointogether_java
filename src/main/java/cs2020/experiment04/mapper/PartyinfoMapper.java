@@ -31,6 +31,11 @@ public interface PartyinfoMapper extends BaseMapper<Partyinfo> {
     int countNowNumber(@Param("partyId")Integer id);
 
     /*
+     * 计算活动已支付的人数
+     */
+    int countPaidNumber(@Param("partyId")Integer id);
+
+    /*
      * 新增一个参加活动的记录
      */
     int saveUserParty(@Param("userId")Integer userId, @Param("partyId")Integer partyId);

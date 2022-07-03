@@ -18,4 +18,8 @@ public interface IPartybillService extends IService<Partybill> {
     List<Partybill> findBillByPartyId(Integer partyId);
 
     void savePartyBillFirst(Partyinfo partyinfo);
+
+    void payConfirm(Integer userId, Integer partyId);
+
+    void payOver(Integer partyId);
 }

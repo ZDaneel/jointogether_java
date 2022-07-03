@@ -2,7 +2,6 @@ package cs2020.experiment04.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import cs2020.experiment04.entity.Partyinfo;
 import cs2020.experiment04.entity.User;
 import cs2020.experiment04.mapper.PartyinfoMapper;
@@ -44,19 +43,19 @@ public class PartyinfoServiceImpl extends ServiceImpl<PartyinfoMapper, Partyinfo
     }
 
     @Override
-    public int saveUserParty(Partyinfo partyinfo) {
+    public void saveUserParty(Partyinfo partyinfo) {
         Integer partyinfoId = partyinfo.getId();
         //用户名取用户
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("username", partyinfo.getUsername());
         User userServiceOne = userService.getOne(queryWrapper);
         Integer userId = userServiceOne.getId();
-        return saveUserParty(userId, partyinfoId);
+        saveUserParty(userId, partyinfoId);
     }
 
     @Override
-    public int saveUserParty(Integer userId, Integer partyId) {
-        return partyinfoMapper.saveUserParty(userId, partyId);
+    public void saveUserParty(Integer userId, Integer partyId) {
+        partyinfoMapper.saveUserParty(userId, partyId);
     }
 
     @Override
@@ -74,7 +73,7 @@ public class PartyinfoServiceImpl extends ServiceImpl<PartyinfoMapper, Partyinfo
     @Override
     public List<Partyinfo> findCreateUnpaidByPage(Integer pageNum, Integer pageSize, Integer id) {
         PageHelper.startPage(pageNum,pageSize);
-        return AddCountNum(partyinfoMapper.findCreateUnpaidByPage(id));
+        return AddCountPaidNum(AddCountNum(partyinfoMapper.findCreateUnpaidByPage(id)));
     }
 
     @Override
@@ -96,25 +95,34 @@ public class PartyinfoServiceImpl extends ServiceImpl<PartyinfoMapper, Partyinfo
     }
 
     @Override
-    public int toGroup(Integer partyId) {
-        return partyinfoMapper.toGroup(partyId);
+    public void toGroup(Integer partyId) {
+        partyinfoMapper.toGroup(partyId);
     }
 
     @Override
-    public int endParty(Integer partyId) {
-        return partyinfoMapper.endParty(partyId);
+    public void endParty(Integer partyId) {
+        partyinfoMapper.endParty(partyId);
     }
 
     @Override
-    public int endJoinedParty(Integer userId, Integer partyId) {
-        return partyinfoMapper.endJoinedParty(userId, partyId);
+    public void endJoinedParty(Integer userId, Integer partyId) {
+        partyinfoMapper.endJoinedParty(userId, partyId);
     }
 
-    //增加当前人数
+    //添加当前人数字段
     public List<Partyinfo> AddCountNum(List<Partyinfo> partyinfoList){
         for (int i = 0; i < partyinfoList.size(); i++) {
             int nowNumber = partyinfoMapper.countNowNumber(partyinfoList.get(i).getId());
             partyinfoList.get(i).setNownumber(nowNumber);
+        }
+        return partyinfoList;
+    }
+
+    //添加已缴费人数字段
+    public List<Partyinfo> AddCountPaidNum(List<Partyinfo> partyinfoList){
+        for (int i = 0; i < partyinfoList.size(); i++) {
+            int paidNumber = partyinfoMapper.countPaidNumber(partyinfoList.get(i).getId());
+            partyinfoList.get(i).setPaidnumber(paidNumber);
         }
         return partyinfoList;
     }
