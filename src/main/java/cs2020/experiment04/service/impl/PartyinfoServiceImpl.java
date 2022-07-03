@@ -38,6 +38,12 @@ public class PartyinfoServiceImpl extends ServiceImpl<PartyinfoMapper, Partyinfo
     }
 
     @Override
+    public List<Partyinfo> findEndPartyByPage(Integer pageNum, Integer pageSize, Integer id, String partyname) {
+        PageHelper.startPage(pageNum,pageSize);
+        return AddCountNum(partyinfoMapper.findEndPartyByPage(id, partyname));
+    }
+
+    @Override
     public int saveUserParty(Partyinfo partyinfo) {
         Integer partyinfoId = partyinfo.getId();
         //用户名取用户
@@ -66,9 +72,9 @@ public class PartyinfoServiceImpl extends ServiceImpl<PartyinfoMapper, Partyinfo
     }
 
     @Override
-    public List<Partyinfo> findCreatePayedByPage(Integer pageNum, Integer pageSize, Integer id) {
+    public List<Partyinfo> findCreateUnpaidByPage(Integer pageNum, Integer pageSize, Integer id) {
         PageHelper.startPage(pageNum,pageSize);
-        return AddCountNum(partyinfoMapper.findCreatePayedByPage(id));
+        return AddCountNum(partyinfoMapper.findCreateUnpaidByPage(id));
     }
 
     @Override
@@ -84,6 +90,12 @@ public class PartyinfoServiceImpl extends ServiceImpl<PartyinfoMapper, Partyinfo
     }
 
     @Override
+    public List<Partyinfo> findJoinedUnpaidByPage(Integer pageNum, Integer pageSize, Integer id) {
+        PageHelper.startPage(pageNum,pageSize);
+        return AddCountNum(partyinfoMapper.findJoinedUnpaidByPage(id));
+    }
+
+    @Override
     public int toGroup(Integer partyId) {
         return partyinfoMapper.toGroup(partyId);
     }
@@ -91,6 +103,11 @@ public class PartyinfoServiceImpl extends ServiceImpl<PartyinfoMapper, Partyinfo
     @Override
     public int endParty(Integer partyId) {
         return partyinfoMapper.endParty(partyId);
+    }
+
+    @Override
+    public int endJoinedParty(Integer userId, Integer partyId) {
+        return partyinfoMapper.endJoinedParty(userId, partyId);
     }
 
     //增加当前人数
@@ -101,6 +118,4 @@ public class PartyinfoServiceImpl extends ServiceImpl<PartyinfoMapper, Partyinfo
         }
         return partyinfoList;
     }
-
-
 }

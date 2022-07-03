@@ -82,6 +82,16 @@ public class PartyinfoController {
         return Result.success(allByPage);
     }
 
+    //已经结束的活动
+    @GetMapping("/allendparty")
+    public Result allEndParty(@RequestParam Integer pageNum,
+                              @RequestParam Integer pageSize,
+                              @RequestParam Integer id,
+                              @RequestParam String partyname) {
+        List<Partyinfo> endPartyByPage = partyinfoService.findEndPartyByPage(pageNum, pageSize, id, partyname);
+        return Result.success(endPartyByPage);
+    }
+
     @GetMapping("/joinparty")
     public Result joinParty(@RequestParam Integer userId,
                             @RequestParam Integer partyId) {
@@ -107,12 +117,12 @@ public class PartyinfoController {
         return Result.success(createdByPage);
     }
 
-    @GetMapping("/mycreatepayed")
-    public Result myCreatePayed(@RequestParam Integer pageNum,
+    @GetMapping("/mycreateunpaid")
+    public Result myCreateUnpaid(@RequestParam Integer pageNum,
                                 @RequestParam Integer pageSize,
                                 @RequestParam Integer id) {
 
-        List<Partyinfo> CreatePayedByPage = partyinfoService.findCreatePayedByPage(pageNum, pageSize, id);
+        List<Partyinfo> CreatePayedByPage = partyinfoService.findCreateUnpaidByPage(pageNum, pageSize, id);
         return Result.success(CreatePayedByPage);
     }
 
@@ -134,6 +144,16 @@ public class PartyinfoController {
         return Result.success(joinedGroupedByPage);
     }
 
+    //已结束的、未缴费的活动
+    @GetMapping("/myjoinunpaid")
+    public Result joinUnpaid(@RequestParam Integer pageNum,
+                            @RequestParam Integer pageSize,
+                            @RequestParam Integer id) {
+
+        List<Partyinfo> endUnpaidByPage = partyinfoService.findJoinedUnpaidByPage(pageNum, pageSize, id);
+        return Result.success(endUnpaidByPage);
+    }
+
     //成团is_group 0->1
     @GetMapping("/toGroup")
     public Result toGroup(@RequestParam Integer partyId) {
@@ -145,6 +165,13 @@ public class PartyinfoController {
     @GetMapping("/endparty")
     public Result endParty(@RequestParam Integer partyId) {
         partyinfoService.endParty(partyId);
+        return Result.success();
+    }
+
+    //退出已参加的活动
+    @GetMapping("/endjoinedparty")
+    public Result endJoinedParty(@RequestParam Integer userId, @RequestParam Integer partyId) {
+        partyinfoService.endJoinedParty(userId, partyId);
         return Result.success();
     }
 
