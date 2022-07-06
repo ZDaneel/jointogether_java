@@ -6,6 +6,7 @@ import com.github.pagehelper.PageInfo;
 import cs2020.experiment04.entity.Partyinfo;
 import cs2020.experiment04.entity.User;
 import cs2020.experiment04.mapper.PartyinfoMapper;
+import cs2020.experiment04.mapper.PartymessageMapper;
 import cs2020.experiment04.service.IPartyinfoService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import cs2020.experiment04.service.IUserService;
@@ -28,6 +29,9 @@ public class PartyinfoServiceImpl extends ServiceImpl<PartyinfoMapper, Partyinfo
     @Resource
     private PartyinfoMapper partyinfoMapper;
 
+    @Resource
+    private PartymessageMapper partymessageMapper;
+
     @Autowired
     private IUserService userService;
 
@@ -39,7 +43,7 @@ public class PartyinfoServiceImpl extends ServiceImpl<PartyinfoMapper, Partyinfo
 
     @Override
     public PageInfo<Partyinfo> findEndPartyByPage(Integer pageNum, Integer pageSize, Integer id, String partyname) {
-        PageHelper.startPage(pageNum, pageSize);
+        PageHelper.startPage(pageNum, pageSize, "id desc");
         return new PageInfo<>(AddCountNum(partyinfoMapper.findEndPartyByPage(id, partyname)));
     }
 
@@ -98,11 +102,23 @@ public class PartyinfoServiceImpl extends ServiceImpl<PartyinfoMapper, Partyinfo
     @Override
     public void toGroup(Integer partyId) {
         partyinfoMapper.toGroup(partyId);
+        //获取所有partyId对应的userId
+        List<Integer> allUserId = partymessageMapper.findAllUserId(partyId);
+        for (Integer userId : allUserId) {
+            //将partyId和每一个userId写入信息表
+            partymessageMapper.sendGroupMessage(userId, partyId);
+        }
     }
 
     @Override
     public void endParty(Integer partyId) {
         partyinfoMapper.endParty(partyId);
+        //获取所有partyId对应的userId
+        List<Integer> allUserId = partymessageMapper.findAllUserId(partyId);
+        for (Integer userId : allUserId) {
+            //将partyId和每一个userId写入信息表
+            partymessageMapper.sendPayMessage(userId, partyId);
+        }
     }
 
     @Override

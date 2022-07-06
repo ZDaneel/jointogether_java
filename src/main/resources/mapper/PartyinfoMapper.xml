@@ -39,6 +39,12 @@
             <if test="partyname != null">
                 and partyname like concat('%', #{partyname}, '%')
             </if>
+            and id in (select party_id
+            from user_party
+            where user_id = #{userId}
+            and is_active = 0
+            and is_group = 1
+            and is_paid = 1)
         </where>
     </select>
 
@@ -50,6 +56,7 @@
           and id not in (select party_id from user_party where is_active = 0)
           and id not in (select party_id from user_party where is_group = 1)
           and username not in (select username from sys_user where id = #{userId})
+          and payover = 0
     </select>
 
     <!--自己创建的、正在进行的、没有成团的、没有缴费的-->

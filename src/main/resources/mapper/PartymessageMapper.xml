@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cs2020.experiment04.mapper.PartymessageMapper">
+
+    <!--成团通知-->
+    <insert id="sendGroupMessage" useGeneratedKeys="true" keyColumn="id">
+        insert into partymessage(message_user_id, message_party_id, message)
+        values (#{userId}, #{partyId}, '活动已成团')
+    </insert>
+
+    <!--缴费通知-->
+    <insert id="sendPayMessage">
+        insert into partymessage(message_user_id, message_party_id, message)
+        values (#{userId}, #{partyId}, '活动已结束，请缴费')
+    </insert>
+
+    <!--查询所有通知-->
+    <select id="findMessageByPage" resultType="cs2020.experiment04.entity.Partymessage">
+        select *, p.partyname as messagePartyName
+        from partymessage pm
+                 left join partyinfo p on p.id = pm.message_party_id
+        where message_user_id = #{userId}
+
+    </select>
+
+    <!--partyId查询所有userId-->
+    <select id="findAllUserId" resultType="java.lang.Integer">
+        select user_id
+        from user_party
+        where party_id = #{partyId}
+    </select>
+
+</mapper>

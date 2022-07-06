@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import cs2020.experiment04.entity.Partyinfo;
 import cs2020.experiment04.service.IPartybillService;
 import cs2020.experiment04.service.IPartyinfoService;
+import cs2020.experiment04.service.IPartymessageService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,6 +19,9 @@ class Experiment04ApplicationTests {
 
     @Autowired
     private IPartybillService partybillService;
+
+    @Autowired
+    private IPartymessageService partymessageService;
 
     @Test
     void contextLoads() {
@@ -45,5 +49,10 @@ class Experiment04ApplicationTests {
         partyinfo.setUsername("admin");
         partyinfo.setCharge(100.0);
         partybillService.savePartyBillFirst(partyinfo);
+    }
+
+    @Test
+    void testFindAllUserId() {
+        partyinfoService.toGroup(1);
     }
 }

@@ -35,6 +35,8 @@ public class PartybillController {
     // 新增或者更新
     @PostMapping
     public Result save(@RequestBody Partybill partybill) {
+        String billUsername = partybill.getBillUsername();
+
         partybillService.saveOrUpdate(partybill);
         //修改partyinfo里的费用
         Integer partyId = partybill.getBillPartyId();

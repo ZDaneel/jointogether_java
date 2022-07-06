@@ -55,6 +55,10 @@ public class Partyinfo implements Serializable {
     @ApiModelProperty("活动发起人")
     private String username;
 
+    @TableField(exist = false)
+    @ApiModelProperty("活动人昵称")
+    private String nickname;
+
     @ApiModelProperty("活动介绍")
     private String partyintro;
 

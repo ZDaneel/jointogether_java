@@ -44,7 +44,7 @@ public class PartybillServiceImpl extends ServiceImpl<PartybillMapper, Partybill
         partybill.setBillPartyId(partyId);
         partybill.setBillName("报名费用");
         partybill.setBillPrice(partyinfo.getCharge());
-        partybill.setBillUsername(partyinfo.getUsername());
+        partybill.setBillUsername(partyinfo.getNickname());
         saveOrUpdate(partybill);
     }
 
