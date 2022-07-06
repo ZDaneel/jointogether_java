@@ -25,10 +25,9 @@ class Experiment04ApplicationTests {
 
     @Test
     void testPartyPage(){
-        List<Partyinfo> allByPage = partyinfoService.findAllByPage(1, 5, 1);
-        for (Partyinfo partyinfo : allByPage) {
-            System.out.println(partyinfo);
-        }
+        PageInfo<Partyinfo> allByPage = partyinfoService.findAllByPage(1, 5, 1);
+        List<Partyinfo> list = allByPage.getList();
+        long total = allByPage.getTotal();
     }
 
     @Test

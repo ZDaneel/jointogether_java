@@ -1,5 +1,6 @@
 package cs2020.experiment04.controller;
 
+import com.github.pagehelper.PageInfo;
 import cs2020.experiment04.service.IPartybillService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.*;
@@ -78,8 +79,7 @@ public class PartyinfoController {
                            @RequestParam Integer pageSize,
                            @RequestParam Integer id) {
 
-        List<Partyinfo> allByPage = partyinfoService.findAllByPage(pageNum, pageSize, id);
-        return Result.success(allByPage);
+        return Result.success(partyinfoService.findAllByPage(pageNum, pageSize, id));
     }
 
     //已经结束的活动
@@ -88,8 +88,7 @@ public class PartyinfoController {
                               @RequestParam Integer pageSize,
                               @RequestParam Integer id,
                               @RequestParam String partyname) {
-        List<Partyinfo> endPartyByPage = partyinfoService.findEndPartyByPage(pageNum, pageSize, id, partyname);
-        return Result.success(endPartyByPage);
+        return Result.success(partyinfoService.findEndPartyByPage(pageNum, pageSize, id, partyname));
     }
 
     @GetMapping("/joinparty")
@@ -104,8 +103,7 @@ public class PartyinfoController {
                            @RequestParam Integer pageSize,
                            @RequestParam Integer id) {
 
-        List<Partyinfo> createdByPage = partyinfoService.findCreatedByPage(pageNum, pageSize, id);
-        return Result.success(createdByPage);
+        return Result.success(partyinfoService.findCreatedByPage(pageNum, pageSize, id));
     }
 
     @GetMapping("/mycreategrouped")
@@ -113,8 +111,7 @@ public class PartyinfoController {
                                   @RequestParam Integer pageSize,
                                   @RequestParam Integer id) {
 
-        List<Partyinfo> createdByPage = partyinfoService.findCreatedGroupedByPage(pageNum, pageSize, id);
-        return Result.success(createdByPage);
+        return Result.success(partyinfoService.findCreatedGroupedByPage(pageNum, pageSize, id));
     }
 
     @GetMapping("/mycreateunpaid")
@@ -122,8 +119,7 @@ public class PartyinfoController {
                                 @RequestParam Integer pageSize,
                                 @RequestParam Integer id) {
 
-        List<Partyinfo> CreatePayedByPage = partyinfoService.findCreateUnpaidByPage(pageNum, pageSize, id);
-        return Result.success(CreatePayedByPage);
+        return Result.success(partyinfoService.findCreateUnpaidByPage(pageNum, pageSize, id));
     }
 
     @GetMapping("/myjoin")
@@ -131,8 +127,7 @@ public class PartyinfoController {
                          @RequestParam Integer pageSize,
                          @RequestParam Integer id) {
 
-        List<Partyinfo> joinedByPage = partyinfoService.findJoinedByPage(pageNum, pageSize, id);
-        return Result.success(joinedByPage);
+        return Result.success(partyinfoService.findJoinedByPage(pageNum, pageSize, id));
     }
 
     @GetMapping("/myjoingrouped")
@@ -140,8 +135,7 @@ public class PartyinfoController {
                                 @RequestParam Integer pageSize,
                                 @RequestParam Integer id) {
 
-        List<Partyinfo> joinedGroupedByPage = partyinfoService.findJoinedGroupedByPage(pageNum, pageSize, id);
-        return Result.success(joinedGroupedByPage);
+        return Result.success(partyinfoService.findJoinedGroupedByPage(pageNum, pageSize, id));
     }
 
     //已结束的、未缴费的活动
@@ -150,8 +144,7 @@ public class PartyinfoController {
                             @RequestParam Integer pageSize,
                             @RequestParam Integer id) {
 
-        List<Partyinfo> endUnpaidByPage = partyinfoService.findJoinedUnpaidByPage(pageNum, pageSize, id);
-        return Result.success(endUnpaidByPage);
+        return Result.success(partyinfoService.findJoinedUnpaidByPage(pageNum, pageSize, id));
     }
 
     //成团is_group 0->1

@@ -59,5 +59,5 @@ public class Partyinfo implements Serializable {
     private String partyintro;
 
     @ApiModelProperty("全都支付完成")
-    private Integer payOver;
+    private Integer payover;
 }

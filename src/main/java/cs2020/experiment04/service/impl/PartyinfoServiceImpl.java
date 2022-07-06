@@ -2,6 +2,7 @@ package cs2020.experiment04.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import cs2020.experiment04.entity.Partyinfo;
 import cs2020.experiment04.entity.User;
 import cs2020.experiment04.mapper.PartyinfoMapper;
@@ -31,15 +32,15 @@ public class PartyinfoServiceImpl extends ServiceImpl<PartyinfoMapper, Partyinfo
     private IUserService userService;
 
     @Override
-    public List<Partyinfo> findAllByPage(Integer pageNum, Integer pageSize,Integer id) {
-        PageHelper.startPage(pageNum,pageSize);
-        return AddCountNum(partyinfoMapper.findAllByPage(id));
+    public PageInfo<Partyinfo> findAllByPage(Integer pageNum, Integer pageSize, Integer id) {
+        PageHelper.startPage(pageNum, pageSize);
+        return new PageInfo<>(AddCountNum(partyinfoMapper.findAllByPage(id)));
     }
 
     @Override
-    public List<Partyinfo> findEndPartyByPage(Integer pageNum, Integer pageSize, Integer id, String partyname) {
-        PageHelper.startPage(pageNum,pageSize);
-        return AddCountNum(partyinfoMapper.findEndPartyByPage(id, partyname));
+    public PageInfo<Partyinfo> findEndPartyByPage(Integer pageNum, Integer pageSize, Integer id, String partyname) {
+        PageHelper.startPage(pageNum, pageSize);
+        return new PageInfo<>(AddCountNum(partyinfoMapper.findEndPartyByPage(id, partyname)));
     }
 
     @Override
@@ -59,39 +60,39 @@ public class PartyinfoServiceImpl extends ServiceImpl<PartyinfoMapper, Partyinfo
     }
 
     @Override
-    public List<Partyinfo> findCreatedByPage(Integer pageNum, Integer pageSize, Integer id) {
+    public PageInfo<Partyinfo> findCreatedByPage(Integer pageNum, Integer pageSize, Integer id) {
         PageHelper.startPage(pageNum,pageSize);
-        return AddCountNum(partyinfoMapper.findCreatedByPage(id));
+        return new PageInfo<>(AddCountNum(partyinfoMapper.findCreatedByPage(id)));
     }
 
     @Override
-    public List<Partyinfo> findCreatedGroupedByPage(Integer pageNum, Integer pageSize, Integer id) {
+    public PageInfo<Partyinfo> findCreatedGroupedByPage(Integer pageNum, Integer pageSize, Integer id) {
         PageHelper.startPage(pageNum,pageSize);
-        return AddCountNum(partyinfoMapper.findCreatedGroupedByPage(id));
+        return new PageInfo<>(AddCountNum(partyinfoMapper.findCreatedGroupedByPage(id)));
     }
 
     @Override
-    public List<Partyinfo> findCreateUnpaidByPage(Integer pageNum, Integer pageSize, Integer id) {
+    public PageInfo<Partyinfo> findCreateUnpaidByPage(Integer pageNum, Integer pageSize, Integer id) {
         PageHelper.startPage(pageNum,pageSize);
-        return AddCountPaidNum(AddCountNum(partyinfoMapper.findCreateUnpaidByPage(id)));
+        return new PageInfo<>(AddCountPaidNum(AddCountNum(partyinfoMapper.findCreateUnpaidByPage(id))));
     }
 
     @Override
-    public List<Partyinfo> findJoinedByPage(Integer pageNum, Integer pageSize, Integer id) {
+    public PageInfo<Partyinfo> findJoinedByPage(Integer pageNum, Integer pageSize, Integer id) {
         PageHelper.startPage(pageNum,pageSize);
-        return AddCountNum(partyinfoMapper.findJoinedByPage(id));
+        return new PageInfo<>(AddCountNum(partyinfoMapper.findJoinedByPage(id)));
     }
 
     @Override
-    public List<Partyinfo> findJoinedGroupedByPage(Integer pageNum, Integer pageSize, Integer id) {
+    public PageInfo<Partyinfo> findJoinedGroupedByPage(Integer pageNum, Integer pageSize, Integer id) {
         PageHelper.startPage(pageNum,pageSize);
-        return AddCountNum(partyinfoMapper.findJoinedGroupedByPage(id));
+        return new PageInfo<>((AddCountNum(partyinfoMapper.findJoinedGroupedByPage(id))));
     }
 
     @Override
-    public List<Partyinfo> findJoinedUnpaidByPage(Integer pageNum, Integer pageSize, Integer id) {
+    public PageInfo<Partyinfo> findJoinedUnpaidByPage(Integer pageNum, Integer pageSize, Integer id) {
         PageHelper.startPage(pageNum,pageSize);
-        return AddCountNum(partyinfoMapper.findJoinedUnpaidByPage(id));
+        return new PageInfo<>((AddCountNum(partyinfoMapper.findJoinedUnpaidByPage(id))));
     }
 
     @Override
