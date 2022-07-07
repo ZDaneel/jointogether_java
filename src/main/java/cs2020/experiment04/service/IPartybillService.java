@@ -22,4 +22,6 @@ public interface IPartybillService extends IService<Partybill> {
     void payConfirm(Integer userId, Integer partyId);
 
     void payOver(Integer partyId);
+
+    List<Partybill> findBillByPartyIdAndUserId(Integer userId, Integer partyId);
 }

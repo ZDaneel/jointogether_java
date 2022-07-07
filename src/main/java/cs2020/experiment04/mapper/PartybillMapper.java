@@ -26,4 +26,6 @@ public interface PartybillMapper extends BaseMapper<Partybill> {
      * 缴费全部完成
      */
     int payOver(@Param("partyId")Integer partyId);
+
+    List<Partybill> findBillByPartyIdAndUserId(@Param("userId")Integer userId, @Param("partyId")Integer partyId);
 }

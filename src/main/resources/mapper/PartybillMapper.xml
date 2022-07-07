@@ -2,24 +2,39 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cs2020.experiment04.mapper.PartybillMapper">
 
+    <!--根据活动id找-->
     <select id="findBillByPartyId" resultType="cs2020.experiment04.entity.Partybill">
         select *
         from partybill
-        where bill_party_id=#{partyId}
+        where bill_party_id = #{partyId}
+    </select>
+
+    <!--根据活动编号和用户编号查询账单，使用UNION合并独立费用和AA费用，UNION上面是独立费用，下面是AA费用-->
+    <select id="findBillByPartyIdAndUserId" resultType="cs2020.experiment04.entity.Partybill">
+        select *
+        from partybill
+        where bill_party_id = #{partyId}
+          and bill_username = (select nickname from sys_user where id = #{userId})
+          and is_aa = 0
+        UNION
+        select *
+        from partybill
+        where bill_party_id = #{partyId}
+          and is_aa = 1
     </select>
 
     <!--确定缴费-->
     <update id="payConfirm">
         update user_party
-        set is_paid=1
+        set is_paid = 1
         where party_id = #{partyId}
-          and user_id = #{userId}
+           and user_id = #{userId}
     </update>
 
     <!--缴费全部完成-->
     <update id="payOver">
         update partyinfo
-        set payover=1
+        set payover = 1
         where id = #{partyId}
     </update>
 </mapper>

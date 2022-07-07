@@ -42,7 +42,7 @@ public class PartybillServiceImpl extends ServiceImpl<PartybillMapper, Partybill
         //设置数据进行新增
         Partybill partybill = new Partybill();
         partybill.setBillPartyId(partyId);
-        partybill.setBillName("报名费用");
+        partybill.setBillName("初始费用");
         partybill.setBillPrice(partyinfo.getCharge());
         partybill.setBillUsername(partyinfo.getNickname());
         saveOrUpdate(partybill);
@@ -56,6 +56,11 @@ public class PartybillServiceImpl extends ServiceImpl<PartybillMapper, Partybill
     @Override
     public void payOver(Integer partyId) {
         partybillMapper.payOver(partyId);
+    }
+
+    @Override
+    public List<Partybill> findBillByPartyIdAndUserId(Integer userId, Integer partyId) {
+        return partybillMapper.findBillByPartyIdAndUserId(userId, partyId);
     }
 
 }

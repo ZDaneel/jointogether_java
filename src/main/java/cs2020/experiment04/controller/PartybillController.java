@@ -35,8 +35,7 @@ public class PartybillController {
     // 新增或者更新
     @PostMapping
     public Result save(@RequestBody Partybill partybill) {
-        String billUsername = partybill.getBillUsername();
-
+        //添加一个费用记录报名费用
         partybillService.saveOrUpdate(partybill);
         //修改partyinfo里的费用
         Integer partyId = partybill.getBillPartyId();
@@ -60,6 +59,11 @@ public class PartybillController {
     }
 
     @GetMapping
+    public Result findAll(@RequestParam Integer userId, @RequestParam Integer partyId) {
+        return Result.success(partybillService.findBillByPartyIdAndUserId(userId, partyId));
+    }
+
+    @GetMapping("/all")
     public Result findAll(@RequestParam Integer partyId) {
         return Result.success(partybillService.findBillByPartyId(partyId));
     }
